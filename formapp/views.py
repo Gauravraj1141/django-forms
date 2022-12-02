@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import Registrationform
+from .forms import Registrationform, MyForm
 # Create your views here.
 
 
@@ -22,3 +22,15 @@ def home(request):
     else:
         fm = Registrationform()
     return render(request, 'formapp/form.html', {"fms": fm})
+
+
+def secondForm(request):
+    if request.method == "POST":
+        myfmdata = MyForm(request.POST)
+        if myfmdata.is_valid():
+            print("validate")
+            print(myfmdata.cleaned_data)
+            myfm = MyForm()
+    else:
+        myfm = MyForm()
+    return render(request, "formapp/newform.html", {'newfm': myfm})
